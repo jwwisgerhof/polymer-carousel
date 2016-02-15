@@ -1,0 +1,131 @@
+<!-- Polymer -->
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<!-- Polymer Elements -->
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/iron-icons/av-icons.html">
+
+<!--
+`<jw-carousel>` is a simple element that displays the opening hours for each of the libraries
+
+Example:
+
+    <jw-carousel></jw-carousel>
+
+@demo
+
+@demo demo/index.html Demo of the Full view
+-->
+<dom-module id="jw-carousel">
+
+    <style is="custom-style">
+        :host {
+            position: relative;
+        }
+
+        .slider {
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .slider ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            overflow: hidden;
+        }
+
+        .slider ul:after {
+            content: "\0020";
+            display: block;
+            clear: both;
+            visibility: hidden;
+        }
+
+        .slider li {
+            width: 100%;
+            z-index: 1;
+            float: left;
+            display: block;
+            position: relative;
+            margin-right: -100%;
+        }
+
+        .slider li img {
+            border: none;
+            width: 100%;
+            opacity: 0;
+            transition: opacity 0.7s;
+        }
+
+        .slider li img.active {
+            opacity: 1;
+            transition: opacity 0.7s;
+            height: auto !important;
+        }
+
+        /** Slider Nav **/
+        .slider-nav {
+            @apply(--layout-horizontal);
+            @apply(--layout-center-justified);
+
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+
+        .slider-nav-icon {
+            background-color: #333;
+            border-radius: 50%;
+            height: 16px;
+            width: 16px;
+            margin: 0 5px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .slider-nav-icon.active {
+            background-color: green;
+        }
+
+        /** Auto play icons **/
+        .slider-auto-play-control {
+            position: absolute;
+            bottom: 0;
+            left: -10px;
+        }
+
+        .slider-auto-play-control iron-icon {
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+        }
+    </style>
+    <template>
+        <div class="slider">
+            <ul>
+                <template is="dom-repeat" items="{{slides}}">
+                    <li>
+                        <img data-slide$="{{item.index}}" class$="slide-image {{slideClass(item)}}" src="{{item.image}}" />
+                    </li>
+                </template>
+            </ul>
+        </div>
+        <div class="slider-nav">
+            <template is="dom-repeat" items="{{slides}}">
+                <a class$="slider-nav-icon {{navClass(item)}}" data-slide$="{{item.index}}" on-click="_navigateToSlide">
+                    &nbsp;
+                </a>
+            </template>
+        </div>
+        <div class="slider-auto-play-control">
+            <template is="dom-if" if="{{paused}}">
+                <iron-icon icon="av:play-arrow" on-click="_togglePause"></iron-icon>
+            </template>
+            <template is="dom-if" if="{{!paused}}">
+                <iron-icon icon="av:pause" on-click="_togglePause"></iron-icon>
+            </template>
+        </div>
+    </template>
+    <script src="jw-carousel.js"></script>
+</dom-module>

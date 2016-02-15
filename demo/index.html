@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+
+    <title>jw-carousel</title>
+
+    <script src="../bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+    <link rel="import" href="../element/jw-carousel.html">
+
+    <style type="text/css">
+        .wrapper {
+            margin: 100px auto;
+            width: 100%;
+            max-width: 800px;
+            box-shadow: 3px 3px rgba(0,0,0,0.24);
+            padding: 10px;
+            background-color: #F1F1F1;
+        }
+    </style>
+</head>
+<body class="fullbleed">
+
+<div class="wrapper">
+    <jw-carousel id="jw-carousel"></jw-carousel>
+</div>
+
+<script type="text/javascript">
+    var carousel = document.querySelector('#jw-carousel');
+    carousel.slides = [
+        {
+            image: "images/1.jpg"
+        },
+        {
+            image: "images/2.png"
+        },
+        {
+            image: "images/3.jpg"
+        },
+        {
+            image: "images/4.jpg"
+        },
+        {
+            image: "images/5.jpg"
+        },
+        {
+            image: "images/6.jpg"
+        },
+        {
+            image: "images/7.jpg"
+        }
+    ]
+</script>
+
+</body>
+</html>
