@@ -81,10 +81,10 @@
          * @private
          */
         _activateSlide: function (newSlide) {
-            document.querySelector('.slide-image.active').classList.remove('active');
+            document.querySelector('li.active').classList.remove('active');
             document.querySelector('.slider-nav-icon.active').classList.remove('active');
 
-            document.querySelector('.slide-image[data-slide="'+newSlide+'"]').classList.add("active");
+            document.querySelector('li[data-slide="'+newSlide+'"]').classList.add("active");
             document.querySelector('.slider-nav-icon[data-slide="'+newSlide+'"]').classList.add("active");
         },
         /**
