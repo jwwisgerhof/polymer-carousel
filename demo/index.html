@@ -8,7 +8,7 @@
     <title>jw-carousel</title>
 
     <script src="../bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
-    <link rel="import" href="../element/jw-carousel.html">
+    <link rel="import" href="../element/polymer-carousel.html">
 
     <style type="text/css">
         .wrapper {
@@ -24,38 +24,55 @@
 <body class="fullbleed">
 
 <div class="wrapper">
-    <jw-carousel id="jw-carousel"></jw-carousel>
+    <polymer-carousel id="jw-carousel"></-carousel>
 </div>
 
 <script type="text/javascript">
-    var carousel = document.querySelector('#jw-carousel');
-    carousel.slides = [
-        {
-            href: "http://www.uq.edu.au/",
-            image: "images/1.jpg"
-        },
-        {
-            href: "http://www.google.com/",
-            image: "images/2.png"
-        },
-        {
-            href: "http://www.youtube.com",
-            image: "images/3.jpg"
-        },
-        {
-            href: "http://www.wisgerhof.io",
-            image: "images/4.jpg"
-        },
-        {
-            image: "images/5.jpg"
-        },
-        {
-            image: "images/6.jpg"
-        },
-        {
-            image: "images/7.jpg"
-        }
-    ]
+    HTMLImports.whenReady(function () {
+        var carousel = document.querySelector('#jw-carousel');
+        carousel.slides = [
+            {
+                link: "http://www.uq.edu.au/",
+                image: {
+                    href: "http://lorempixel.com/800/300/abstract",
+                    description: "Test image"
+                }
+            },
+            {
+                link: "http://www.google.com/",
+                image: {
+                    href: "http://lorempixel.com/g/800/300/city"
+                }
+            },
+            {
+                href: "http://www.youtube.com",
+                image: {
+                    href: "http://lorempixel.com/800/300/people"
+                }
+            },
+            {
+                href: "http://www.wisgerhof.io",
+                image: {
+                    href: "http://lorempixel.com/g/800/300/nightlife"
+                }
+            },
+            {
+                image: {
+                    href: "http://lorempixel.com/800/300/food"
+                }
+            },
+            {
+                image: {
+                    href: "http://lorempixel.com/g/800/300/fashion"
+                }
+            },
+            {
+                image: {
+                    href: "http://lorempixel.com/800/300/technics"
+                }
+            }
+        ]
+    });
 </script>
 
 </body>

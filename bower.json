@@ -4,7 +4,7 @@
     "Jan-Willem Wisgerhof <jwwisgerhof@gmail.com>"
   ],
   "description": "",
-  "main": "",
+  "main": "element/polymer-carousel.html",
   "moduleType": [],
   "license": "MIT",
   "homepage": "",

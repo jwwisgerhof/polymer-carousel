@@ -1,10 +1,11 @@
 (function() {
     Polymer({
-        is: 'jw-carousel',
+        is: 'polymer-carousel',
         properties: {
             slides: {
                 type: Array,
-                observer: '_slidesChanged'
+                observer: '_slidesChanged',
+                value: []
             },
             slideDuration: {
                 type: Number,
@@ -24,13 +25,22 @@
             },
             _interval: {
                 type: Object
+            },
+            _initialized: {
+              type: Boolean,
+              value: false
             }
         },
         ready: function () {
             var self = this;
 
             if (this.autoPlay) {
+              if (this.slides.length > 0) {
+                self._initialized = true;
                 self._startAutoPlay();
+              }
+            } else {
+              self._initialized = true;
             }
         },
         /**
@@ -44,6 +54,12 @@
             }
 
             if (this.activeSlide > this.slides.length) { this.activeSlide = 1; }
+
+            // Check if the carousel was initialized
+            if (this._initialized === false && this.autoPlay && this.slides.length > 0) {
+              this._initialized = true;
+              this._startAutoPlay();
+            }
         },
         /**
          * @description Navigates to the slide provided by the event model
@@ -51,6 +67,10 @@
          * @private
          */
         _navigateToSlide: function(e) {
+            // Reset timeout on interval
+            this._stopAutoPlay();
+            this._startAutoPlay();
+
             if (e.model.item.index != this.activeSlide) {
                 this._transitionToSlide(e.model.item.index);
             }
@@ -66,8 +86,6 @@
                 var newSlide = (this.activeSlide == this.slides.length ? 1 : this.activeSlide + 1);
             }
 
-            console.log(newSlide);
-
             this._activateSlide(newSlide);
 
             var self = this;
@@ -81,10 +99,10 @@
          * @private
          */
         _activateSlide: function (newSlide) {
-            document.querySelector('li.active').classList.remove('active');
+            document.querySelector('.slide.active').classList.remove('active');
             document.querySelector('.slider-nav-icon.active').classList.remove('active');
 
-            document.querySelector('li[data-slide="'+newSlide+'"]').classList.add("active");
+            document.querySelector('.slide[data-slide="'+newSlide+'"]').classList.add("active");
             document.querySelector('.slider-nav-icon[data-slide="'+newSlide+'"]').classList.add("active");
         },
         /**
