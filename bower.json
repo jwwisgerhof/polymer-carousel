@@ -7,7 +7,7 @@
   "main": "element/polymer-carousel.html",
   "moduleType": [],
   "license": "MIT",
-  "homepage": "",
+  "homepage": "https://www.github.com/jwwisgerhof/polymer-carousel",
   "ignore": [
     "**/.*",
     "node_modules",
@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "polymer": "Polymer/polymer#^1.2.4",
-    "iron-icons": "PolymerElements/iron-icons#^1.1.3"
+    "iron-icons": "PolymerElements/iron-icons#^1.1.3",
+    "iron-component-page": "PolymerElements/iron-component-page#^1.1.4"
   }
 }
