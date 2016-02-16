@@ -124,7 +124,7 @@
      * @private
      */
     _togglePause: function () {
-      if (this.autoPlay) {
+      if (!this.autoPlay) {
         this._startAutoPlay();
       } else {
         this._stopAutoPlay();
