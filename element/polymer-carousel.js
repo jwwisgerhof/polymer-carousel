@@ -2,22 +2,26 @@
   Polymer({
     is: 'polymer-carousel',
     properties: {
-      slides: {
-        type: Array,
-        observer: '_slidesChanged',
-        value: []
-      },
-      slideDuration: {
+      activeSlide: {
         type: Number,
-        value: 3000
+        value: 1
       },
       autoPlay: {
         type: Object,
         value: true
       },
-      activeSlide: {
+      slideDuration: {
         type: Number,
-        value: 1
+        value: 3000
+      },
+      slides: {
+        type: Array,
+        observer: '_slidesChanged',
+        value: []
+      },
+      transitionDuration: {
+        type: Number,
+        value: 500
       },
       _interval: {
         type: Object
@@ -47,10 +51,10 @@
         this.slides[i].index = i + 1;
       }
 
-      if (this.activeSlide > this.slides.length) { this.activeSlide = 1; }
-
       // Check if the carousel was initialized
       if (this._initialized !== true && this.slides.length > 0) {
+        if (this.activeSlide > this.slides.length) { this.activeSlide = 1; }
+
         // Start auto play and
         if (this.autoPlay) { this._startAutoPlay(); }
         this._initialized = true;
@@ -63,8 +67,10 @@
      */
     _navigateToSlide: function(e) {
       // Reset timeout on interval
-      this._stopAutoPlay();
-      this._startAutoPlay();
+      if (this.autoPlay) {
+        this._stopAutoPlay();
+        this._startAutoPlay();
+      }
 
       if (e.model.item.index != this.activeSlide) {
         this._transitionToSlide(e.model.item.index);
@@ -85,7 +91,6 @@
       this._fadeIn(newSlide);
 
       this._activateSlide(newSlide);
-      this.activeSlide = newSlide;
     },
     /**
      * @description Activates the given slide - toggling classes
@@ -93,6 +98,7 @@
      * @private
      */
     _activateSlide: function (newSlide) {
+      this.activeSlide = newSlide;
       document.querySelector('.slider-nav-icon.active').classList.remove('active');
       document.querySelector('.slider-nav-icon[data-slide="'+newSlide+'"]').classList.add("active");
     },
@@ -151,18 +157,22 @@
       el.style.opacity = 0;
       el.style.display = "block";
 
+      var self = this;
+
       (function fade() {
         var val = parseFloat(el.style.opacity);
         if (!((val += .1) > 1)) {
           el.style.opacity = val;
           setTimeout(function() {
             requestAnimationFrame(fade);
-          }, 50);
+          }, self.transitionDuration / 10);
         }
       })();
     },
     _fadeOut: function (slideNr) {
       var el = document.querySelector('.slide[data-slide="'+slideNr+'"]');
+
+      var self = this;
 
       (function fade() {
         if ((el.style.opacity -= .1) < 0) {
@@ -170,7 +180,7 @@
         } else {
           setTimeout(function () {
             requestAnimationFrame(fade);
-          }, 50);
+          }, (self.transitionDuration / 10));
         }
       })();
     }
