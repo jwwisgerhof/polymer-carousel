@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+
+    <title>polymer-carousel</title>
+
+    <script src="../bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+    <link rel="import" href="../element/polymer-carousel.html">
+
+    <style type="text/css">
+        .wrapper {
+            margin: 100px auto;
+            width: 100%;
+            max-width: 800px;
+            box-shadow: 3px 3px rgba(0,0,0,0.24);
+            padding: 10px;
+            background-color: #F1F1F1;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body class="fullbleed">
+
+<div class="wrapper">
+    <polymer-carousel id="jw-carousel" auto-play="false" active-slide="4" slide-duration="2000" transition-duration="500"></polymer-carousel>
+</div>
+
+<script type="text/javascript">
+    HTMLImports.whenReady(function () {
+        var carousel = document.querySelector('#jw-carousel');
+        carousel.slides = [
+            {
+                link: "http://www.uq.edu.au/",
+                image: {
+                    href: "http://lorempixel.com/800/300/abstract",
+                    description: "Test image"
+                }
+            },
+            {
+                link: "http://www.google.com/",
+                image: {
+                    href: "http://lorempixel.com/g/800/300/city"
+                }
+            },
+            {
+                link: "http://www.youtube.com",
+                image: {
+                    href: "http://lorempixel.com/800/300/people"
+                }
+            },
+            {
+                link: "http://www.wisgerhof.io",
+                image: {
+                    href: "http://lorempixel.com/g/800/300/nightlife"
+                }
+            },
+            {
+                image: {
+                    href: "http://lorempixel.com/800/300/food"
+                }
+            },
+            {
+                image: {
+                    href: "http://lorempixel.com/g/800/300/fashion"
+                }
+            },
+            {
+                image: {
+                    href: "http://lorempixel.com/800/300/technics"
+                }
+            }
+        ]
+    });
+</script>
+
+</body>
+</html>
