@@ -148,16 +148,7 @@ Example:
 
         <!-- Nav and Controls -->
         <template is="dom-if" if="{{slides.length > 1}}">
-            <div class="slider-nav">
-                <template is="dom-repeat" items="{{slides}}">
-                    <button
-                            class$="slider-nav-icon {{navClass(item)}}"
-                            data-slide$="{{item.index}}"
-                            on-click="_navigateToSlide"
-                            aria-label="{{item.image.description}}">
-                    </button>
-                </template>
-            </div>
+            <!-- Pause button -->
             <div class="slider-auto-play-control">
                 <template is="dom-if" if="{{!autoPlay}}">
                     <button on-click="_togglePause">
@@ -167,6 +158,17 @@ Example:
                 <template is="dom-if" if="{{autoPlay}}">
                     <button on-click="_togglePause">
                         <iron-icon aria-label="Stop auto play" icon="av:pause"></iron-icon>
+                    </button>
+                </template>
+            </div>
+            <!-- Nav -->
+            <div class="slider-nav">
+                <template is="dom-repeat" items="{{slides}}">
+                    <button
+                            class$="slider-nav-icon {{navClass(item)}}"
+                            data-slide$="{{item.index}}"
+                            on-click="_navigateToSlide"
+                            aria-label="{{item.image.description}}">
                     </button>
                 </template>
             </div>
