@@ -27,7 +27,10 @@ git checkout --orphan gh-pages
 # Remove all non-relevant content
 git rm -rf .gitignore
 git rm -rf bin
-git rm -rf test
+#git rm -rf test
+
+# Change bower paths
+sed -i -e 's#../../#../bower_components/#g' element/polymer-carousel.html
 
 # Bower install
 bower cache clean $REPO # ensure we're getting the latest from the desired branch.
