@@ -2,30 +2,60 @@
   Polymer({
     is: 'polymer-carousel',
     properties: {
+      /**
+       * Slide that is currently active. Can be used on initialization
+       * @type Number
+       */
       activeSlide: {
         type: Number,
         value: 1
       },
+      /**
+       * Sets the status of Auto Play. Setting this to false effectively "pauses" the carousel
+       * @type Boolean
+       */
       autoPlay: {
         type: Object,
         value: true
       },
+      /**
+       * The duration each slide is active (in milliseconds)
+       * @type Number
+       */
       slideDuration: {
         type: Number,
         value: 3000
       },
+      /**
+       * Slides
+       * @type Array
+       */
       slides: {
         type: Array,
         observer: '_slidesChanged',
         value: []
       },
+      /**
+       * How long the transition animation lasts
+       * @type Number
+       */
       transitionDuration: {
         type: Number,
         value: 500
       },
+      /**
+       * Tracked interval for internal use only
+       * @type Object
+       * @private
+       */
       _interval: {
         type: Object
       },
+      /**
+       * Whether the carousel was initialized
+       * @type Boolean
+       * @private
+       */
       _initialized: {
         type: Boolean,
         value: false
@@ -42,7 +72,7 @@
       }
     },
     /**
-     * @description Reloads slides when the slides array changes.
+     * Reloads slides when the slides array changes.
      * @private
      */
     _slidesChanged: function () {
@@ -61,7 +91,7 @@
       }
     },
     /**
-     * @description Navigates to the slide provided by the event model
+     * Navigates to the slide provided by the event model
      * @param e
      * @private
      */
@@ -77,7 +107,7 @@
       }
     },
     /**
-     * @description Transitions to the given slide (or the next if no parameter is passed)
+     * Transitions to the given slide (or the next if no parameter is passed)
      * @param newSlide (optional)
      * @private
      */
@@ -93,7 +123,7 @@
       this._activateSlide(newSlide);
     },
     /**
-     * @description Activates the given slide - toggling classes
+     * Activates the given slide - toggling classes
      * @param newSlide
      * @private
      */
@@ -103,7 +133,7 @@
       document.querySelector('.slider-nav-icon[data-slide="'+newSlide+'"]').classList.add("active");
     },
     /**
-     * @description Starts the auto play interval
+     * Starts the auto play interval
      * @private
      */
     _startAutoPlay: function () {
@@ -114,14 +144,14 @@
       }, this.slideDuration);
     },
     /**
-     * @description Stops the slider from auto playing slides
+     * Stops the slider from auto playing slides
      * @private
      */
     _stopAutoPlay: function () {
       clearInterval(this._interval);
     },
     /**
-     * @description Toggles autoplay
+     * Toggles auto play
      * @private
      */
     _togglePause: function () {
@@ -133,25 +163,30 @@
       this.autoPlay = !this.autoPlay;
     },
     /**
-     * @description Returns "active" when the given slide is currently selected
+     * Returns "active" when the given slide is currently selected
      * @param slide
      * @returns {string}
      */
-    slideClass: function (slide) {
+    _slideClass: function (slide) {
       if (slide.index == this.activeSlide) {
         return "active";
       }
     },
     /**
-     * @description Provides a class for the navigation bullets
+     * Provides a class for the navigation bullets
      * @param slide
      * @returns {string}
      */
-    navClass: function (slide) {
+    _navClass: function (slide) {
       if (slide.index == this.activeSlide) {
         return "active";
       }
     },
+    /**
+     * Fades in the selected slide
+     * @param slideNr
+     * @private
+       */
     _fadeIn: function (slideNr) {
       var el = document.querySelector('.slide[data-slide="'+slideNr+'"]');
       el.style.opacity = 0;
@@ -169,6 +204,11 @@
         }
       })();
     },
+    /**
+     * Fades out the selected slide
+     * @param slideNr
+     * @private
+       */
     _fadeOut: function (slideNr) {
       var el = document.querySelector('.slide[data-slide="'+slideNr+'"]');
 

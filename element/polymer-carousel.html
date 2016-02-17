@@ -125,7 +125,7 @@ Example:
         <div class="slider">
             <div class="slide-container">
                 <template is="dom-repeat" items="{{slides}}">
-                    <div class$="slide {{slideClass(item)}}" data-slide$="{{item.index}}">
+                    <div class$="slide {{_slideClass(item)}}" data-slide$="{{item.index}}">
                         <template is="dom-if" if="{{item.link}}">
                             <a href$="{{item.link}}" title$="{{item.image.description}}">
                                 <img
@@ -165,7 +165,7 @@ Example:
             <div class="slider-nav">
                 <template is="dom-repeat" items="{{slides}}">
                     <button
-                            class$="slider-nav-icon {{navClass(item)}}"
+                            class$="slider-nav-icon {{_navClass(item)}}"
                             data-slide$="{{item.index}}"
                             on-click="_navigateToSlide"
                             aria-label="{{item.image.description}}">
