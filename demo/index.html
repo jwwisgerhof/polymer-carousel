@@ -18,13 +18,14 @@
             box-shadow: 3px 3px rgba(0,0,0,0.24);
             padding: 10px;
             background-color: #F1F1F1;
+            box-sizing: border-box;
         }
     </style>
 </head>
 <body class="fullbleed">
 
 <div class="wrapper">
-    <polymer-carousel id="jw-carousel"></polymer-carousel>
+    <polymer-carousel id="jw-carousel" auto-play="false" active-slide="4"></polymer-carousel>
 </div>
 
 <script type="text/javascript">
@@ -45,13 +46,13 @@
                 }
             },
             {
-                href: "http://www.youtube.com",
+                link: "http://www.youtube.com",
                 image: {
                     href: "http://lorempixel.com/800/300/people"
                 }
             },
             {
-                href: "http://www.wisgerhof.io",
+                link: "http://www.wisgerhof.io",
                 image: {
                     href: "http://lorempixel.com/g/800/300/nightlife"
                 }

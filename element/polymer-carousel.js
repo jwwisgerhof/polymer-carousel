@@ -35,8 +35,6 @@
           self._initialized = true;
           self._startAutoPlay();
         }
-      } else {
-        self._initialized = true;
       }
     },
     /**
@@ -52,9 +50,10 @@
       if (this.activeSlide > this.slides.length) { this.activeSlide = 1; }
 
       // Check if the carousel was initialized
-      if (this._initialized === false && this.autoPlay && this.slides.length > 0) {
+      if (this._initialized !== true && this.slides.length > 0) {
+        // Start auto play and
+        if (this.autoPlay) { this._startAutoPlay(); }
         this._initialized = true;
-        this._startAutoPlay();
       }
     },
     /**
@@ -79,15 +78,14 @@
     _transitionToSlide: function (newSlide) {
       if (typeof(newSlide) === 'undefined') {
         // Default increment the slide by 1
-        var newSlide = (this.activeSlide == this.slides.length ? 1 : this.activeSlide + 1);
+        newSlide = (this.activeSlide == this.slides.length ? 1 : this.activeSlide + 1);
       }
 
-      this._activateSlide(newSlide);
+      this._fadeOut(this.activeSlide);
+      this._fadeIn(newSlide);
 
-      var self = this;
-      setTimeout(function () {
-        self.activeSlide = newSlide;
-      }, 700);
+      this._activateSlide(newSlide);
+      this.activeSlide = newSlide;
     },
     /**
      * @description Activates the given slide - toggling classes
@@ -95,10 +93,7 @@
      * @private
      */
     _activateSlide: function (newSlide) {
-      document.querySelector('.slide.active').classList.remove('active');
       document.querySelector('.slider-nav-icon.active').classList.remove('active');
-
-      document.querySelector('.slide[data-slide="'+newSlide+'"]').classList.add("active");
       document.querySelector('.slider-nav-icon[data-slide="'+newSlide+'"]').classList.add("active");
     },
     /**
@@ -150,6 +145,34 @@
       if (slide.index == this.activeSlide) {
         return "active";
       }
+    },
+    _fadeIn: function (slideNr) {
+      var el = document.querySelector('.slide[data-slide="'+slideNr+'"]');
+      el.style.opacity = 0;
+      el.style.display = "block";
+
+      (function fade() {
+        var val = parseFloat(el.style.opacity);
+        if (!((val += .1) > 1)) {
+          el.style.opacity = val;
+          setTimeout(function() {
+            requestAnimationFrame(fade);
+          }, 50);
+        }
+      })();
+    },
+    _fadeOut: function (slideNr) {
+      var el = document.querySelector('.slide[data-slide="'+slideNr+'"]');
+
+      (function fade() {
+        if ((el.style.opacity -= .1) < 0) {
+          el.style.display = "none";
+        } else {
+          setTimeout(function () {
+            requestAnimationFrame(fade);
+          }, 50);
+        }
+      })();
     }
   })
 })();

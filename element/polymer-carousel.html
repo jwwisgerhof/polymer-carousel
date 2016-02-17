@@ -2,8 +2,8 @@
 <link rel="import" href="../../polymer/polymer.html">
 
 <!-- Polymer Elements -->
-<link rel="import" href="../../iron-icons/iron-icons.html">
-<link rel="import" href="../../iron-icons/av-icons.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/iron-icons/av-icons.html">
 
 <!--
 `<polymer-carousel>` is a simple element that displays the opening hours for each of the libraries
@@ -48,31 +48,25 @@ Example:
                 width: 100%;
                 z-index: 1;
                 float: left;
-                display: block;
                 position: relative;
                 margin-right: -100%;
+                opacity: 0;
+                display: none;
             }
 
             .slide.active {
+                display: block;
+                opacity: 1;
                 z-index: 2;
             }
 
             .slide a {
-                width: 100%;
-                opacity: 1;
+                display: block;
             }
 
             .slide img {
                 border: none;
                 width: 100%;
-                opacity: 0;
-                transition: opacity 0.7s;
-            }
-
-            .slide.active img {
-                opacity: 1;
-                transition: opacity 0.7s;
-                height: auto !important;
             }
 
             /** Slider Nav **/
@@ -156,18 +150,23 @@ Example:
         <template is="dom-if" if="{{slides.length > 1}}">
             <div class="slider-nav">
                 <template is="dom-repeat" items="{{slides}}">
-                    <button class$="slider-nav-icon {{navClass(item)}}" data-slide$="{{item.index}}" on-click="_navigateToSlide"></button>
+                    <button
+                            class$="slider-nav-icon {{navClass(item)}}"
+                            data-slide$="{{item.index}}"
+                            on-click="_navigateToSlide"
+                            aria-label="{{item.image.description}}">
+                    </button>
                 </template>
             </div>
             <div class="slider-auto-play-control">
                 <template is="dom-if" if="{{!autoPlay}}">
                     <button on-click="_togglePause">
-                        <iron-icon icon="av:play-arrow"></iron-icon>
+                        <iron-icon aria-label="Start auto play" icon="av:play-arrow"></iron-icon>
                     </button>
                 </template>
                 <template is="dom-if" if="{{autoPlay}}">
                     <button on-click="_togglePause">
-                        <iron-icon icon="av:pause"></iron-icon>
+                        <iron-icon aria-label="Stop auto play" icon="av:pause"></iron-icon>
                     </button>
                 </template>
             </div>
