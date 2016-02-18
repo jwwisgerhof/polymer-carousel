@@ -76,6 +76,10 @@
       }
 
       this.async(function () {
+        if (this.link) {
+          this.$$('.slide a').setAttribute('tabindex', '-1');
+        }
+
         this.animationConfig['show'].timing.duration = this.transitionDuration;
         this.animationConfig['hide'].timing.duration = this.transitionDuration;
 
@@ -105,10 +109,10 @@
      * @private
      */
     _onNeonAnimationFinish: function (e, animHandler) {
-      if (animHandler === 'show') {
-        this.$.slide.classList.remove('hidden');
-      } else {
-        this.$.slide.classList.add('hidden');
+      this.$.slide.classList.toggle('hidden');
+
+      if (this.link) {
+        this.$$('.slide a').setAttribute('tabindex', (animHandler === 'show' ? '0' : '-1'));
       }
     }
   });
