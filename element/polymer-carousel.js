@@ -71,6 +71,10 @@
       this._preloadImages();
     },
     _preloadImages: function () {
+      if (this.slides.length == 0) {
+        return;
+      }
+
       // Build list of all indexes
       this._imagesToBeLoaded = [];
       for (var i = 0; i < this.slides.length; i++) {
