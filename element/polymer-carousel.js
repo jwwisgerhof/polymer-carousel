@@ -68,7 +68,6 @@
     },
     attached: function () {
       // Placeholder
-      this._preloadImages();
     },
     _preloadImages: function () {
       if (this.slides.length == 0) {
@@ -138,6 +137,8 @@
       if (this.slides.length > 0 && this.activeSlide > this.slides.length) {
         this.activeSlide = 1;
       }
+
+      this._preloadImages();
     },
     /**
      * Navigates to the slide provided by the event model
