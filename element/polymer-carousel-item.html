@@ -5,6 +5,8 @@
 <link rel="import" href="../../iron-icons/iron-icons.html">
 <link rel="import" href="../../iron-icons/av-icons.html">
 <link rel="import" href="../../neon-animation/neon-animation.html">
+<link rel="import" href="../../paper-spinner/paper-spinner.html">
+<link rel="import" href="../../paper-styles/paper-styles.html">
 
 <!--
 `<polymer-carousel-item>` represents a single slide of the polymer-carousel
@@ -18,6 +20,7 @@ Example:
         <style is="custom-style">
             :host {
                 width: 100%;
+                @apply(--paper-font-common-base);
             }
 
             .slide {
@@ -43,16 +46,38 @@ Example:
                 border: none;
                 width: 100%;
             }
+
+            .loading-container {
+                padding-top: 80px;
+                padding-bottom: 80px;
+                text-align: center;
+                font-size: 16px;
+            }
+
+            paper-spinner {
+                width: 50px;
+                height: 50px;
+                padding-bottom: 10px;
+            }
         </style>
 
         <div id="slide" class="slide">
-            <template is="dom-if" if="{{link}}">
-                <a href$="{{link}}" aria-label="{{description}}" title="{{description}}">
+            <template is="dom-if" if="{{imageLoaded}}">
+                <template is="dom-if" if="{{link}}">
+                    <a href$="{{link}}" aria-label="{{description}}" title="{{description}}">
+                        <img src$="{{image}}" aria-label$="{{description}}" class="slide-image" />
+                    </a>
+                </template>
+                <template is="dom-if" if="{{!link}}">
                     <img src$="{{image}}" aria-label$="{{description}}" class="slide-image" />
-                </a>
+                </template>
             </template>
-            <template is="dom-if" if="{{!link}}">
-                <img src$="{{image}}" aria-label$="{{description}}" class="slide-image" />
+
+            <template is="dom-if" if="{{!imageLoaded}}">
+                <div class="loading-container">
+                    <paper-spinner active></paper-spinner><br />
+                    Loading...
+                </div>
             </template>
         </div>
     </template>

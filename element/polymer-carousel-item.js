@@ -64,6 +64,13 @@
       _hiddenClass: {
         type: String,
         value: ''
+      },
+      /**
+       * Determines if the image has been loaded
+       */
+      imageLoaded: {
+        type: Boolean,
+        value: false
       }
     },
     listeners: {
@@ -76,7 +83,7 @@
       }
 
       this.async(function () {
-        if (this.link) {
+        if (this.link && this.imageLoaded) {
           this.$$('.slide a').setAttribute('tabindex', '-1');
         }
 
@@ -111,7 +118,7 @@
     _onNeonAnimationFinish: function (e, animHandler) {
       this.$.slide.classList.toggle('hidden');
 
-      if (this.link) {
+      if (this.link && this.imageLoaded) {
         this.$$('.slide a').setAttribute('tabindex', (animHandler === 'show' ? '0' : '-1'));
       }
     }

@@ -51,12 +51,9 @@
         type: Number,
         value: 0
       },
-      /**
-       * Keeps track of image preloading
-       */
-      _preloaded: {
-        type: Boolean,
-        value: false
+      _imagesToBeLoaded: {
+        type: Array,
+        value: []
       }
     },
     listeners: {
@@ -64,18 +61,35 @@
     },
     attached: function () {
       // Placeholder
-      this._preload();
+      this._preloadImages();
     },
-    _preload: function () {
-      var images = [];
+    _preloadImages: function () {
+      // Build list of all indexes
+      this._imagesToBeLoaded = [];
       for (var i = 0; i < this.slides.length; i++) {
-        images.push(this.slides[i].image.href);
+        if ((this.activeSlide - 1) != i) {
+          this._imagesToBeLoaded.push(this.slides[i]);
+        }
       }
+      this._imagesToBeLoaded.unshift(this.slides[this.activeSlide - 1]);
 
+      // Start preloading
+      this._preloadImage();
+    },
+    _preloadImage: function () {
       var self = this;
-      preloadimages(images).done(function (e) {
-        self._preloaded = true;
-      });
+
+      if (this._imagesToBeLoaded.length > 0) {
+        var image = self._imagesToBeLoaded.shift();
+
+        var img = new Image();
+        img.src = image.image.href;
+        img.onload = function () {
+          self.$$('.item-'+image.index).imageLoaded = true;
+
+          self._preloadImage();
+        };
+      }
     },
     /**
      * Fired whenever a carousel-item is loaded
@@ -207,37 +221,4 @@
       }
     }
   });
-
-  /**
-   * Helper function to preload images
-   *
-   * @param arr
-   * @returns {{done: done}}
-   */
-  function preloadimages(arr){
-    var newimages=[], loadedimages=0;
-    var postaction=function(){};
-    var arr=(typeof arr!="object")? [arr] : arr;
-    function imageloadpost(){
-      loadedimages++
-      if (loadedimages==arr.length){
-        postaction(newimages); //call postaction and pass in newimages array as parameter
-      }
-    }
-    for (var i=0; i<arr.length; i++){
-      newimages[i]=new Image();
-      newimages[i].src=arr[i];
-      newimages[i].onload=function(){
-        imageloadpost();
-      };
-      newimages[i].onerror=function(){
-        imageloadpost();
-      };
-    }
-    return { //return blank object with done() method
-      done:function(f){
-        postaction=f || postaction;
-      }
-    }
-  }
 })();

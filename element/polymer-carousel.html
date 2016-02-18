@@ -4,7 +4,6 @@
 <!-- Polymer Elements -->
 <link rel="import" href="../../iron-icons/iron-icons.html">
 <link rel="import" href="../../iron-icons/av-icons.html">
-<link rel="import" href="../../paper-spinner/paper-spinner.html">
 <link rel="import" href="../../paper-styles/paper-styles.html">
 
 <link rel="import" href="polymer-carousel-item.html">
@@ -99,74 +98,50 @@ Example:
                 color: #666;
                 @apply(--carousel-auto-play-icon);
             }
-
-            .loading-container {
-                padding-top: 80px;
-                padding-bottom: 80px;
-                text-align: center;
-                font-size: 16px;
-            }
-
-            paper-spinner {
-                width: 50px;
-                height: 50px;
-                padding-bottom: 10px;
-            }
         </style>
 
-        <template is="dom-if" if="{{_preloaded}}">
-            <!-- Main Slider View -->
-            <div class="slider" id="slider">
-                <div class="slide-container">
-                    <template is="dom-repeat" items="{{slides}}">
-                        <polymer-carousel-item
-                                class$="item-{{item.index}}"
-                                image$="{{item.image.href}}"
-                                description$="{{item.image.description}}"
-                                link$="{{item.link}}"
-                                transition-duration$="{{transitionDuration}}">
-                        </polymer-carousel-item>
-                    </template>
-                </div>
+        <!-- Main Slider View -->
+        <div class="slider" id="slider">
+            <div class="slide-container">
+                <template is="dom-repeat" items="{{slides}}">
+                    <polymer-carousel-item
+                            class$="item-{{item.index}}"
+                            image$="{{item.image.href}}"
+                            description$="{{item.image.description}}"
+                            link$="{{item.link}}"
+                            transition-duration$="{{transitionDuration}}">
+                    </polymer-carousel-item>
+                </template>
             </div>
+        </div>
 
-            <!-- Nav and Controls -->
-            <template is="dom-if" if="{{slides.length > 1}}">
-                <!-- Pause button -->
-                <div class="slider-auto-play-control">
-                    <template is="dom-if" if="{{!autoPlay}}">
-                        <button on-click="_togglePause">
-                            <iron-icon aria-label="Start auto play" icon="av:play-arrow"></iron-icon>
-                        </button>
-                    </template>
-                    <template is="dom-if" if="{{autoPlay}}">
-                        <button on-click="_togglePause">
-                            <iron-icon aria-label="Stop auto play" icon="av:pause"></iron-icon>
-                        </button>
-                    </template>
-                </div>
-                <!-- Nav -->
-                <div class="slider-nav">
-                    <template is="dom-repeat" items="{{slides}}">
-                        <button
-                                class$="slider-nav-icon {{_navClass(item)}}"
-                                data-slide$="{{item.index}}"
-                                on-click="_navigateToSlide"
-                                aria-label$="{{item.image.description}}">
-                        </button>
-                    </template>
-                </div>
-            </template>
-        </template>
-
-        <template is="dom-if" if="{{!_preloaded}}">
-            <div class="loading-container">
-                <paper-spinner active></paper-spinner><br />
-                Loading...
+        <!-- Nav and Controls -->
+        <template is="dom-if" if="{{slides.length > 1}}">
+            <!-- Pause button -->
+            <div class="slider-auto-play-control">
+                <template is="dom-if" if="{{!autoPlay}}">
+                    <button on-click="_togglePause">
+                        <iron-icon aria-label="Start auto play" icon="av:play-arrow"></iron-icon>
+                    </button>
+                </template>
+                <template is="dom-if" if="{{autoPlay}}">
+                    <button on-click="_togglePause">
+                        <iron-icon aria-label="Stop auto play" icon="av:pause"></iron-icon>
+                    </button>
+                </template>
+            </div>
+            <!-- Nav -->
+            <div class="slider-nav">
+                <template is="dom-repeat" items="{{slides}}">
+                    <button
+                            class$="slider-nav-icon {{_navClass(item)}}"
+                            data-slide$="{{item.index}}"
+                            on-click="_navigateToSlide"
+                            aria-label$="{{item.image.description}}">
+                    </button>
+                </template>
             </div>
         </template>
-
-
     </template>
     <script src="polymer-carousel.js"></script>
 </dom-module>
