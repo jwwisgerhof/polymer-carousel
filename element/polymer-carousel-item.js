@@ -52,25 +52,16 @@
         }
       },
       /**
-       * Determines whether the carousel item should start of as hidden
-       */
-      startHidden: {
-        type: Object,
-        value: true
-      },
-      /**
-       * Used internally to set the "hidden" class
-       */
-      _hiddenClass: {
-        type: String,
-        value: ''
-      },
-      /**
        * Determines if the image has been loaded
        */
       imageLoaded: {
         type: Boolean,
-        value: false
+        value: false,
+        observer: "_imageLoaded"
+      },
+      _currentlyHidden: {
+        type: Boolean,
+        value: true
       }
     },
     listeners: {
@@ -78,15 +69,7 @@
       'neon-animation-finish': '_onNeonAnimationFinish'
     },
     attached: function () {
-      if (this.startHidden) {
-        this.$.slide.classList.add('hidden');
-      }
-
       this.async(function () {
-        if (this.link && this.imageLoaded) {
-          this.$$('.slide a').setAttribute('tabindex', '-1');
-        }
-
         // Set preloader height
         if (!this.imageLoaded) {
           var el = this.$$('.loading-container');
@@ -102,6 +85,13 @@
          */
         this.fire("polymer-carousel-item-loaded");
       });
+    },
+    _imageLoaded: function () {
+      if (!this._currentlyHidden && this.imageLoaded && this.link) {
+        this.async(function () {
+          this.$$('.slide a').setAttribute('tabindex', '0');
+        }, 1);
+      }
     },
     /**
      * Shows the carousel item
@@ -123,9 +113,10 @@
      */
     _onNeonAnimationFinish: function (e, animHandler) {
       this.$.slide.classList.toggle('hidden');
+      this._currentlyHidden = (animHandler === 'show' ? false : true);
 
       if (this.link && this.imageLoaded) {
-        this.$$('.slide a').setAttribute('tabindex', (animHandler === 'show' ? '0' : '-1'));
+        this.$$('.slide a').setAttribute('tabindex', (this._currentlyHidden ? '-1' : '0'));
       }
     }
   });
