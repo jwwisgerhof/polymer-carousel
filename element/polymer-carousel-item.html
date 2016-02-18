@@ -48,10 +48,15 @@ Example:
             }
 
             .loading-container {
-                padding-top: 80px;
-                padding-bottom: 80px;
-                text-align: center;
                 font-size: 16px;
+
+                @apply(--layout-horizontal);
+                @apply(--layout-center);
+                @apply(--layout-center-justified);
+            }
+
+            .loading-container div {
+                text-align: center;
             }
 
             paper-spinner {
@@ -75,8 +80,10 @@ Example:
 
             <template is="dom-if" if="{{!imageLoaded}}">
                 <div class="loading-container">
-                    <paper-spinner active></paper-spinner><br />
-                    Loading...
+                    <div>
+                        <paper-spinner active></paper-spinner><br />
+                        Loading...
+                    </div>
                 </div>
             </template>
         </div>

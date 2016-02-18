@@ -87,6 +87,12 @@
           this.$$('.slide a').setAttribute('tabindex', '-1');
         }
 
+        // Set preloader height
+        if (!this.imageLoaded) {
+          var el = this.$$('.loading-container');
+          el.style.height = (el.offsetWidth / this.heightRatio) + "px";
+        }
+
         this.animationConfig['show'].timing.duration = this.transitionDuration;
         this.animationConfig['hide'].timing.duration = this.transitionDuration;
 

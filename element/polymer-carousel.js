@@ -16,6 +16,10 @@
         type: Object,
         value: true
       },
+      heightRatio: {
+        type: Number,
+        value: 1.5
+      },
       /**
        * The duration each slide is active (in milliseconds)
        */
@@ -51,6 +55,9 @@
         type: Number,
         value: 0
       },
+      /**
+       * A list of images that need to be loaded
+       */
       _imagesToBeLoaded: {
         type: Array,
         value: []
