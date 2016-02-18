@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+
+    <title>polymer-carousel</title>
+
+    <script src="../bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+    <link rel="import" href="../element/polymer-carousel.html">
+
+    <style type="text/css">
+        .wrapper {
+            margin: 100px auto;
+            width: 100%;
+            max-width: 800px;
+            box-shadow: 3px 3px rgba(0,0,0,0.24);
+            padding: 10px;
+            background-color: #F1F1F1;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body class="fullbleed">
+<div class="item-1"></div>
+
+<button onclick="toggleFirst()">Toggle #1</button>
+<br /><br /><br />
+<polymer-carousel-item id="item-1" image="http://lorempixel.com/800/300/people" active="true"></polymer-carousel-item>
+<polymer-carousel-item id="item-2" image="http://lorempixel.com/800/300/technics" active="false"></polymer-carousel-item>
+
+<script type="text/javascript">
+    HTMLImports.whenReady(function () {
+        var el = document.querySelector('#item-1');
+        var ell = document.querySelector('#item-2');
+    });
+
+    var one_on = true;
+    function toggleFirst() {
+        var el = document.querySelector('#item-1');
+        var ell = document.querySelector('#item-2');
+        if (one_on) {
+            el.hide();
+            ell.show();
+        } else {
+            el.show();
+            ell.hide();
+        }
+
+        one_on = !one_on;
+    }
+</script>
+
+</body>
+</html>

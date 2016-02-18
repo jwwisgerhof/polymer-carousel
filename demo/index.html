@@ -23,14 +23,15 @@
     </style>
 </head>
 <body class="fullbleed">
-
+<div class="item-1"></div>
 <div class="wrapper">
-    <polymer-carousel id="jw-carousel" auto-play="false" active-slide="4" slide-duration="2000" transition-duration="500"></polymer-carousel>
+    <polymer-carousel id="polymer-carousel" auto-play="true" active-slide="4" slide-duration="5000" transition-duration="1000"></polymer-carousel>
 </div>
 
 <script type="text/javascript">
     HTMLImports.whenReady(function () {
-        var carousel = document.querySelector('#jw-carousel');
+        var carousel = document.querySelector('#polymer-carousel');
+
         carousel.slides = [
             {
                 link: "http://www.uq.edu.au/",
@@ -44,7 +45,8 @@
                 image: {
                     href: "http://lorempixel.com/g/800/300/city"
                 }
-            },
+            }
+            ,
             {
                 link: "http://www.youtube.com",
                 image: {
@@ -58,6 +60,7 @@
                 }
             },
             {
+                link: "http://www.test.com",
                 image: {
                     href: "http://lorempixel.com/800/300/food"
                 }
@@ -72,7 +75,7 @@
                     href: "http://lorempixel.com/800/300/technics"
                 }
             }
-        ]
+        ];
     });
 </script>
 

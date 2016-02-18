@@ -5,6 +5,8 @@
 <link rel="import" href="../../iron-icons/iron-icons.html">
 <link rel="import" href="../../iron-icons/av-icons.html">
 
+<link rel="import" href="polymer-carousel-item.html">
+
 <!--
 `<polymer-carousel>` is a simple element that displays the opening hours for each of the libraries
 
@@ -42,31 +44,6 @@ Example:
                 display: block;
                 clear: both;
                 visibility: hidden;
-            }
-
-            .slide {
-                width: 100%;
-                z-index: 1;
-                float: left;
-                position: relative;
-                margin-right: -100%;
-                opacity: 0;
-                display: none;
-            }
-
-            .slide.active {
-                display: block;
-                opacity: 1;
-                z-index: 2;
-            }
-
-            .slide a {
-                display: block;
-            }
-
-            .slide img {
-                border: none;
-                width: 100%;
             }
 
             /** Slider Nav **/
@@ -122,26 +99,16 @@ Example:
         </style>
 
         <!-- Main Slider View -->
-        <div class="slider">
+        <div class="slider" id="slider">
             <div class="slide-container">
                 <template is="dom-repeat" items="{{slides}}">
-                    <div class$="slide {{_slideClass(item)}}" data-slide$="{{item.index}}">
-                        <template is="dom-if" if="{{item.link}}">
-                            <a href$="{{item.link}}" title$="{{item.image.description}}">
-                                <img
-                                        aria-label$="{{item.image.description}}"
-                                        class$="slide-image"
-                                        src="{{item.image.href}}" />
-                            </a>
-                        </template>
-                        <template is="dom-if" if="{{!item.link}}">
-                            <img
-                                    aria-label$="{{item.image.description}}"
-                                    title$="{{item.image.description}}"
-                                    class$="slide-image"
-                                    src="{{item.image.href}}" />
-                        </template>
-                    </div>
+                    <polymer-carousel-item
+                            class$="item-{{item.index}}"
+                            image$="{{item.image.href}}"
+                            description$="{{item.image.description}}"
+                            link$="{{item.link}}"
+                            transition-duration$="{{transitionDuration}}">
+                    </polymer-carousel-item>
                 </template>
             </div>
         </div>

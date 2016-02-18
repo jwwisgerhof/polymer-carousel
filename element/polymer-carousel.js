@@ -4,7 +4,6 @@
     properties: {
       /**
        * Slide that is currently active. Can be used on initialization
-       * @type Number
        */
       activeSlide: {
         type: Number,
@@ -12,7 +11,6 @@
       },
       /**
        * Sets the status of Auto Play. Setting this to false effectively "pauses" the carousel
-       * @type Boolean
        */
       autoPlay: {
         type: Object,
@@ -20,7 +18,6 @@
       },
       /**
        * The duration each slide is active (in milliseconds)
-       * @type Number
        */
       slideDuration: {
         type: Number,
@@ -28,7 +25,6 @@
       },
       /**
        * Slides
-       * @type Array
        */
       slides: {
         type: Array,
@@ -37,7 +33,6 @@
       },
       /**
        * How long the transition animation lasts
-       * @type Number
        */
       transitionDuration: {
         type: Number,
@@ -45,30 +40,44 @@
       },
       /**
        * Tracked interval for internal use only
-       * @type Object
-       * @private
        */
       _interval: {
         type: Object
       },
       /**
-       * Whether the carousel was initialized
-       * @type Boolean
-       * @private
+       * Keeps track of the items loaded
        */
-      _initialized: {
-        type: Boolean,
-        value: false
+      _itemsLoaded: {
+        type: Number,
+        value: 0
       }
     },
-    ready: function () {
-      var self = this;
+    listeners: {
+      'polymer-carousel-item-loaded': '_itemLoaded'
+    },
+    attached: function () {
+      // Placeholder
+    },
+    /**
+     * Fired whenever a carousel-item is loaded
+     * @private
+     */
+    _itemLoaded: function () {
+      this._itemsLoaded++;
+
+      if (this._itemsLoaded == this.slides.length) {
+        this._activate();
+      }
+    },
+    /**
+     * Fired when all carousel items are loaded
+     * @private
+     */
+    _activate: function () {
+      this.$$('.item-' + this.activeSlide).show();
 
       if (this.autoPlay) {
-        if (this.slides.length > 0) {
-          self._initialized = true;
-          self._startAutoPlay();
-        }
+        this._startAutoPlay();
       }
     },
     /**
@@ -76,18 +85,14 @@
      * @private
      */
     _slidesChanged: function () {
-      // Add indexes
+      this._itemsLoaded = 0;
+
       for (var i = 0; i < this.slides.length; i++) {
         this.slides[i].index = i + 1;
       }
 
-      // Check if the carousel was initialized
-      if (this._initialized !== true && this.slides.length > 0) {
-        if (this.activeSlide > this.slides.length) { this.activeSlide = 1; }
-
-        // Start auto play and
-        if (this.autoPlay) { this._startAutoPlay(); }
-        this._initialized = true;
+      if (this.slides.length > 0 && this.activeSlide > this.slides.length) {
+        this.activeSlide = 1;
       }
     },
     /**
@@ -117,8 +122,8 @@
         newSlide = (this.activeSlide == this.slides.length ? 1 : this.activeSlide + 1);
       }
 
-      this._fadeOut(this.activeSlide);
-      this._fadeIn(newSlide);
+      this.$$('.item-' + this.activeSlide).hide();
+      this.$$('.item-' + newSlide).show();
 
       this._activateSlide(newSlide);
     },
@@ -181,48 +186,6 @@
       if (slide.index == this.activeSlide) {
         return "active";
       }
-    },
-    /**
-     * Fades in the selected slide
-     * @param slideNr
-     * @private
-       */
-    _fadeIn: function (slideNr) {
-      var el = document.querySelector('.slide[data-slide="'+slideNr+'"]');
-      el.style.opacity = 0;
-      el.style.display = "block";
-
-      var self = this;
-
-      (function fade() {
-        var val = parseFloat(el.style.opacity);
-        if (!((val += .1) > 1)) {
-          el.style.opacity = val;
-          setTimeout(function() {
-            requestAnimationFrame(fade);
-          }, self.transitionDuration / 10);
-        }
-      })();
-    },
-    /**
-     * Fades out the selected slide
-     * @param slideNr
-     * @private
-       */
-    _fadeOut: function (slideNr) {
-      var el = document.querySelector('.slide[data-slide="'+slideNr+'"]');
-
-      var self = this;
-
-      (function fade() {
-        if ((el.style.opacity -= .1) < 0) {
-          el.style.display = "none";
-        } else {
-          setTimeout(function () {
-            requestAnimationFrame(fade);
-          }, (self.transitionDuration / 10));
-        }
-      })();
     }
   })
 })();

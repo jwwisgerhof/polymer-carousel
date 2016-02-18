@@ -1,0 +1,60 @@
+<!-- Polymer -->
+<link rel="import" href="../../polymer/polymer.html">
+
+<!-- Polymer Elements -->
+<link rel="import" href="../../iron-icons/iron-icons.html">
+<link rel="import" href="../../iron-icons/av-icons.html">
+<link rel="import" href="../../neon-animation/neon-animation.html">
+
+<!--
+`<polymer-carousel-item>` represents a single slide of the polymer-carousel
+
+Example:
+
+    <polymer-carousel-item image="image.jpg"></polymer-carousel-item>
+-->
+<dom-module id="polymer-carousel-item">
+    <template>
+        <style is="custom-style">
+            :host {
+                width: 100%;
+            }
+
+            .slide {
+                width: 100%;
+                z-index: 2;
+                float: left;
+                position: relative;
+                margin-right: -100%;
+                display: block;
+                opacity: 1;
+            }
+
+            .slide.hidden {
+                opacity: 0;
+                z-index: 1;
+            }
+            
+            .slide a {
+                display: block;
+            }
+
+            .slide-image {
+                border: none;
+                width: 100%;
+            }
+        </style>
+
+        <div id="slide" class="slide">
+            <template is="dom-if" if="{{link}}">
+                <a href$="{{link}}" aria-label="{{description}}" title="{{description}}">
+                    <img src$="{{image}}" aria-label$="{{description}}" class="slide-image" />
+                </a>
+            </template>
+            <template is="dom-if" if="{{!link}}">
+                <img src$="{{image}}" aria-label$="{{description}}" class="slide-image" />
+            </template>
+        </div>
+    </template>
+    <script src="polymer-carousel-item.js"></script>
+</dom-module>
