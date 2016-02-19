@@ -24,6 +24,13 @@
         type: String
       },
       /**
+       * Slide number. Used for events firing
+       */
+      slideNumber: {
+        type: Number,
+        value: 0
+      },
+      /**
        * Transition duration
        */
       transitionDuration: {
@@ -118,6 +125,14 @@
       if (this.link && this.imageLoaded) {
         this.$$('.slide a').setAttribute('tabindex', (this._currentlyHidden ? '-1' : '0'));
       }
+    },
+    /**
+     * Fires an event
+     * @param e
+     * @private
+     */
+    _linkClicked: function () {
+      this.fire("polymer-carousel-link-clicked", { "slideNumber": this.slideNumber });
     }
   });
 })();
