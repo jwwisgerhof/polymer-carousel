@@ -153,7 +153,7 @@
       }
 
       if (e.model.item.index != this.activeSlide) {
-        this.fire("polymer-carousel-slide-changed", { slideNumber: e.mode.item.index });
+        this.fire("polymer-carousel-slide-changed", { slideNumber: e.model.item.index });
         this._transitionToSlide(e.model.item.index);
       }
     },
