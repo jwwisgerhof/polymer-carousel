@@ -153,6 +153,7 @@
       }
 
       if (e.model.item.index != this.activeSlide) {
+        this.fire("polymer-carousel-slide-changed", { slideNumber: e.mode.item.index });
         this._transitionToSlide(e.model.item.index);
       }
     },
@@ -206,9 +207,11 @@
      */
     _togglePause: function () {
       if (!this.autoPlay) {
+        this.fire("polymer-carousel-resumed");
         this._startAutoPlay();
       } else {
         this._stopAutoPlay();
+        this.fire("polymer-carousel-paused");
       }
       this.autoPlay = !this.autoPlay;
     },
