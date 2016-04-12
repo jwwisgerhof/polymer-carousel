@@ -74,11 +74,11 @@ Example:
             <template is="dom-if" if="{{imageLoaded}}">
                 <template is="dom-if" if="{{link}}">
                     <a href$="{{link}}" aria-label="{{description}}" title="{{description}}" tabindex="-1" on-click="_linkClicked">
-                        <img src$="{{image}}" aria-label$="{{description}}" class="slide-image" />
+                        <img src$="{{image}}" alt="{{description}}" aria-label$="{{description}}" class="slide-image" />
                     </a>
                 </template>
                 <template is="dom-if" if="{{!link}}">
-                    <img src$="{{image}}" aria-label$="{{description}}" class="slide-image" />
+                    <img src$="{{image}}" alt="{{description}}" aria-label$="{{description}}" class="slide-image" />
                 </template>
             </template>
 
